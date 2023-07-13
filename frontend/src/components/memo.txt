@@ -1,0 +1,87 @@
+import { useState, useEffect } from 'react';
+import axios from "axios";
+
+function TableList() {
+
+  const [sensors, setSensorData] = useState([])
+  
+
+  
+  useEffect(() => {
+    // router.post('/sensor', SensorCtrl.CreateSensor)
+    // router.put('/sensor/:id', SensorCtrl.UpdateSensor)
+    // router.delete('/sensor/:id', SensorCtrl.DeleteSensor)
+    // router.get('/sensor/:id', SensorCtrl.GetSensorById)
+    // router.get('/sensors', SensorCtrl.GetSensors)
+
+    const CreateSensor = async () => {
+      axios.get("/api/sensors",{
+        headers: { 
+          'Content-Type': 'application/json',
+        }})
+        .then(res => {
+          setSensorData(res.data.data);
+          console.log(res.data.data);        
+          console.log(res.data.data);
+        }).catch(error => console.log(error))
+    };
+
+    CreateSensor();
+
+    /*
+    axios.get("/api/sensors",{
+      headers: { 
+        'Content-Type': 'application/json',
+      }})
+      .then(res => {
+        setSensorData(res.data.sensor);
+        console.log(res.data);        
+      }).catch(error => console.log(error))
+     */ 
+
+      /*
+      axios.post("http://localhost:3001/api/sensor",{
+        date: "2023/02/07",
+        humidity: 30,
+        temperature: 50,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).catch(error => console.log(error))
+      */
+
+      /*
+      axios.get("http://localhost:3001/api/sensor/64ad612cd5ba35f5fce0e81b",{
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': true,
+          'Access-Control-Allow-Credentials': true,
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          crossorigin: true,
+        }
+      })
+      .then(response => {
+        setSensorData(response.data);
+        console.log(response.data);        
+      })
+      .catch(error => console.log(error))
+      */
+
+  }, []);
+  
+
+  //if (!sensor) return null;
+
+  return (
+    <div className="TableList">
+      <h1>List of Countries</h1>
+      <div>
+        {sensors.map((sensor : any, index : any) => (
+          <li key="{index}">{sensor.date}, {sensor.temperature}, {sensor.humidity}</li>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default TableList;
